@@ -167,7 +167,6 @@ function AriaTab() {
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const analyse = useServerFn(runAriaAnalysis);
 
   async function run() {
     if (!input.trim()) return;
@@ -175,7 +174,7 @@ function AriaTab() {
     setError(null);
     setOutput(null);
     try {
-      const result = await analyse({ data: { prompt: input } });
+      const result = await runAriaClaude(input);
       if (result.ok) setOutput(result.text);
       else setError(result.error);
     } catch (e) {
