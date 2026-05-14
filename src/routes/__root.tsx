@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 
+import { AppLayout } from "@/components/AppLayout";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
@@ -112,8 +113,10 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
+  return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <AppLayout />
     </QueryClientProvider>
   );
 }
+
