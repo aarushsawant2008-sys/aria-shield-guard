@@ -1,9 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { ArrowLeft, FileText, Bot, AlertTriangle, X } from "lucide-react";
 import { getCase, ragBadgeClass, riskColorClass, type StageStatus, type Case } from "@/lib/cases";
-import { runAriaAnalysis } from "@/lib/aria.functions";
+import { runAriaClaude } from "@/lib/aria-claude";
 
 export const Route = createFileRoute("/case/$id")({
   component: CaseReport,
