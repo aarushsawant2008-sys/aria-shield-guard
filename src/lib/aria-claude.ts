@@ -14,45 +14,33 @@ Always cite exact regulatory provisions. Always remind that the human compliance
 export type AriaResult = { ok: true; text: string } | { ok: false; error: string };
 
 export async function runAriaClaude(prompt: string): Promise<AriaResult> {
-  const apiKey = import.meta.env.VITE_CLAUDE_API_KEY as string | undefined;
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY as string | undefined;
   if (!apiKey) {
-    return {
-      ok: false,
-      error: "VITE_CLAUDE_API_KEY is not configured. Add it in your project environment variables.",
-    };
+    return { ok: false, error: "VITE_GEMINI_API_KEY is not configured." };
   }
-
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-        "anthropic-dangerous-direct-browser-access": "true",
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: SYSTEM }] },
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.3, maxOutputTokens: 2000 },
+        }),
       },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 2000,
-        temperature: 0.3,
-        system: SYSTEM,
-        messages: [{ role: "user", content: prompt }],
-      }),
-    });
-
+    );
     if (!res.ok) {
       const t = await res.text();
-      return { ok: false, error: `Claude API error (${res.status}): ${t.slice(0, 400)}` };
+      return { ok: false, error: `Gemini API error (${res.status}): ${t.slice(0, 300)}` };
     }
-
     const json = (await res.json()) as {
-      content?: Array<{ type: string; text?: string }>;
+      candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
     };
     const text =
-      json.content
-        ?.filter((b) => b.type === "text")
-        .map((b) => b.text ?? "")
-        .join("\n") || "No response received.";
+      json.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("\n") ??
+      "No response received.";
     return { ok: true, text };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : "Unknown error" };
