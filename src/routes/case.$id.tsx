@@ -1,9 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { ArrowLeft, FileText, Bot, AlertTriangle, X } from "lucide-react";
 import { getCase, ragBadgeClass, riskColorClass, type StageStatus, type Case } from "@/lib/cases";
-import { runAriaAnalysis } from "@/lib/aria.functions";
+import { runAriaClaude } from "@/lib/aria-claude";
 
 export const Route = createFileRoute("/case/$id")({
   component: CaseReport,
@@ -168,7 +167,6 @@ function AriaTab() {
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const analyse = useServerFn(runAriaAnalysis);
 
   async function run() {
     if (!input.trim()) return;
@@ -176,7 +174,7 @@ function AriaTab() {
     setError(null);
     setOutput(null);
     try {
-      const result = await analyse({ data: { prompt: input } });
+      const result = await runAriaClaude(input);
       if (result.ok) setOutput(result.text);
       else setError(result.error);
     } catch (e) {
