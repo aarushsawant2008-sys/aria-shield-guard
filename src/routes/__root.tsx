@@ -77,10 +77,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "ARIA: AI KYC compliance agent for Indian wealth management firms." },
       { name: "author", content: "ARIA" },
       { property: "og:title", content: "ARIA — KYC Compliance Platform" },
-      { property: "og:description", content: "AI KYC compliance agent for Indian wealth management firms." },
+      { property: "og:description", content: "ARIA: AI KYC compliance agent for Indian wealth management firms." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "ARIA — KYC Compliance Platform" },
+      { name: "twitter:description", content: "ARIA: AI KYC compliance agent for Indian wealth management firms." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/bf25d99c-d5da-4003-a102-4f6315eacb51/id-preview-a5961926--c6ce4a66-1f8a-4a88-8c05-ded0f5bbd3d2.lovable.app-1778814218769.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/bf25d99c-d5da-4003-a102-4f6315eacb51/id-preview-a5961926--c6ce4a66-1f8a-4a88-8c05-ded0f5bbd3d2.lovable.app-1778814218769.png" },
     ],
     links: [
       {
