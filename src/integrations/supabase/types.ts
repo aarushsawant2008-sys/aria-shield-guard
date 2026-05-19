@@ -14,7 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      cases: {
+        Row: {
+          created_at: string
+          flag: string
+          id: string
+          is_critical_str: boolean
+          name: string
+          pan: string
+          rag: string
+          rag_label: string
+          result: Json
+          score: number
+          submitted: string
+        }
+        Insert: {
+          created_at?: string
+          flag?: string
+          id?: string
+          is_critical_str?: boolean
+          name: string
+          pan: string
+          rag?: string
+          rag_label?: string
+          result?: Json
+          score?: number
+          submitted?: string
+        }
+        Update: {
+          created_at?: string
+          flag?: string
+          id?: string
+          is_critical_str?: boolean
+          name?: string
+          pan?: string
+          rag?: string
+          rag_label?: string
+          result?: Json
+          score?: number
+          submitted?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
