@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft, FileText, Bot, AlertTriangle, X } from "lucide-react";
-import { getCase, ragBadgeClass, riskColorClass, type StageStatus, type Case } from "@/lib/cases";
+import { fetchCase, ragBadgeClass, riskColorClass, type StageStatus, type Case } from "@/lib/cases";
 import { runAriaClaude } from "@/lib/aria-claude";
 
 export const Route = createFileRoute("/case/$id")({
@@ -38,11 +38,24 @@ type DecisionState = null | { label: string; tone: "ok" | "warn" | "fail"; succe
 function CaseReport() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
-  const c = getCase(id);
+  const [c, setC] = useState<Case | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const [tab, setTab] = useState<Tab>("summary");
   const [confirm, setConfirm] = useState<DecisionState>(null);
   const [done, setDone] = useState<DecisionState>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchCase(id).then((found) => {
+      setC(found);
+      setLoading(false);
+    });
+  }, [id]);
+
+  if (loading) {
+    return <div className="text-sm text-muted-foreground py-10">Loading case…</div>;
+  }
 
   if (!c) {
     return (
