@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Scale, FileText, BarChart3, Shield } from "lucide-react";
+import { Scale, FileText, BarChart3, Shield, Plus } from "lucide-react";
 
 interface NavItem {
   to: string;
@@ -14,6 +14,7 @@ export function AppSidebar() {
 
   const items: NavItem[] = [
     { to: "/", label: "Compliance Queue", icon: Scale, show: true },
+    { to: "/new-case", label: "New Case", icon: Plus, show: true },
     { to: pathname, label: "Case Report", icon: FileText, show: onCase },
     { to: "/admin", label: "Admin Panel", icon: BarChart3, show: true },
   ].filter((i) => i.show);
