@@ -1,1 +1,4 @@
 project_id = "ktaiksdwwqtivhpqgxmc"
+
+[functions.aria-analyse]
+verify_jwt = false
