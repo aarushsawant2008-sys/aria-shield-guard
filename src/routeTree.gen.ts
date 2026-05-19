@@ -9,19 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as NewCaseRouteImport } from './routes/new-case'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as NewCaseRouteImport } from './routes/new-case'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaseIdRouteImport } from './routes/case.$id'
 
-const NewCaseRoute = NewCaseRouteImport.update({
-  id: '/new-case',
-  path: '/new-case',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewCaseRoute = NewCaseRouteImport.update({
+  id: '/new-case',
+  path: '/new-case',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -71,18 +71,18 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/new-case': {
-      id: '/new-case'
-      path: '/new-case'
-      fullPath: '/new-case'
-      preLoaderRoute: typeof NewCaseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin': {
       id: '/admin'
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new-case': {
+      id: '/new-case'
+      path: '/new-case'
+      fullPath: '/new-case'
+      preLoaderRoute: typeof NewCaseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
